@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+  <title><!-- 발표 제목 --> — H-QUEST Deck</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="presentation-container">
+    <div class="progress-indicator"><div class="progress-bar" id="progressFill"></div></div>
+    <div class="mobile-touch-header"></div>
+    <div class="slides-container" id="slidesContainer"></div>
+    <div class="navigation-container">
+      <div class="navigation-panel">
+        <button class="nav-btn" id="prevBtn" onclick="previousSlide()" disabled>◀</button>
+        <div class="slide-dots" id="slideDots"></div>
+        <button class="nav-btn" id="nextBtn" onclick="nextSlide()">▶</button>
+      </div>
+      <div class="slide-counter">
+        <span id="currentSlide">1</span> / <span id="totalSlides">1</span>
+      </div>
+    </div>
+    <div class="swipe-indicator" id="swipeHint">좌우로 스와이프하여 이동</div>
+  </div>
+
+  <!-- 코어 파일: 외부 참조(임베드 금지) -->
+  <script src="presentation-data.js"></script>
+  <script src="template-renderer.js"></script>
+  <script src="app.js"></script>
+
+  <!-- 내용만 코딩: addSlideWithTemplate 시퀀스 -->
+  <script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    const ok = await loadPresentationData();
+    if (!ok || !window.addSlideWithTemplate) return;
+
+    // ============ 여기에 "내용만" 작성 - 20가지 중 조합, 필요한만큼 ============
+    // ============ 본문안 내용은 icon, title, subtitle, body, footer의 5가지 조합이 기본 ============
+    // ============ 슬라이드 만들때 icon, title, subtitle, body, footer중 사용하지 않는 항목은 icon: ' ', title: ' ', subtitle: ' ', body: ' ', footer: ' ',와 같이 작은 따음표 안에 한칸 빈 스페이스로 blank 처리 및 그 뒤에 쉼표 ============
+   // ===== 20가지 템플릿 여기에 전부 다 있음 - 필요한 것만 가지고 코딩 =====
+   // ==== 슬라이드 갯수 20개 넘어가도 됨 - 이 안의 템플릿만 가지고 쓸것 ===
+    // 예시) ✨ Smaller Text 버전 데모 슬라이드
+	    // 1. 타이틀 슬라이드 (11)
+                addSlideWithTemplate('11', {
+                    icon: '🎨',
+                    title: '발표 제목',
+                    subtitle: '부제목',
+                    body: '본문',
+                    footer: '주석 '
+                });
+                
+                // 2. 1줄에 2 column - Left, Right  (22)
+                addSlideWithTemplate('22', [
+                    {
+                        icon: '🔍',
+                        title: '제목',
+                        body: '본문'
+                    },
+                    {
+                        icon: '📖',
+                        title: '제목',
+                        body: '본문'
+                    }
+                ]);
+
+                // 3. 1줄에 3 column - Left, Middle, Right  (33)
+                addSlideWithTemplate('33', [
+                    {
+                        icon: '🔍',
+                        title: '제목',
+                        body: '본문'
+                    },
+                    {
+                        icon: '📖',
+                        title: '제목',
+                        body: '본문'
+                    },
+                    {
+                        icon: '🔍',
+                        title: '제목',
+                        body: '본문'
+                    },
+                ]);         
+                // 4. 1줄에 4 column - "Super"Left, Left, Right, "Super" Right (44)
+                addSlideWithTemplate('44', [
+                    {
+                        icon: '🔍',
+                        title: '제목',
+                        body: '본문'
+                    },
+                    {
+                        icon: '📖',
+                        title: '제목',
+                        body: '본문'
+                    },
+                    {
+                        icon: '🔍',
+                        title: '제목',
+                        body: '본문'
+                    },
+                    {
+                        icon: '🔍',
+                        title: '제목',
+                        body: '본문'
+                    },
+                ]);          
+
+                // 5. 상하 각 1줄 (1+1)
+                addSlideWithTemplate('1+1', {
+                    row1: {
+                        title: '제목',
+                        subtitle: '부제목',
+                        body: ' '
+                    },
+                    row2: {
+                        title: '제목',
+                        subtitle: '부제목',
+                        body: '본문'
+                        }
+                });
+
+                // 6. 위쪽에 1줄, 아래에 2줄 (1+2)
+                addSlideWithTemplate('1+2', {
+                    row1: {
+                        title: '제목',
+                        subtitle: '부제목',
+                        body: '본문'
+                    },
+                    row2: [
+                        {
+                            icon: '🔮',
+                            title: '제목',
+                            body: '본문'
+                        },
+                        {
+                            icon: '🔮',
+                            title: '제목',
+                            body: '본문'
+                        }
+                    ]
+                });
+
+                // 7. 위쪽에 1줄, 아래에 3줄 (1+3)
+                addSlideWithTemplate('1+3', {
+                    row1: {
+                        title: '제목',
+                        subtitle: '부제목',
+                        body: '본문'
+                    },
+                    row2: [
+                        {
+                            icon: '🔮',
+                            title: '제목',
+                            body: '본문'
+                        },
+                        {
+                            icon: '🔮',
+                            title: '제목',
+                            body: '본문'
+                        },
+                        {
+                            icon: '🔮',
+                            title: '제목',
+                            body: '본문'
+                        }
+                    ]
+                });    
+
+                // 8. 위쪽에 1줄, 아래에 4줄 (1+4)
+                addSlideWithTemplate('1+4', {
+                    row1: {
+                        title: '제목',
+                        subtitle: '부제목',
+                        body: '본문'
+                    },
+                    row2: [
+                        {
+                            icon: '🔮',
+                            title: '제목',
+                            body: '본문'
+                        },
+                        {
+                            icon: '🔮',
+                            title: '제목',
+                            body: '본문'
+                        },
+                        {
+                            icon: '🔮',
+                            title: '제목',
+                            body: '본문'
+                        },
+                        {
+                            icon: '🔮',
+                            title: '제목',
+                            body: '본문'
+                        }
+                    ]
+                });    
+
+                // 9. 위쪽에 2칸, 아래에 1줄 (2+1)
+                addSlideWithTemplate('2+1', {
+                    row1: [
+                        {
+                            icon: '📈',
+                            title: '좌측제목',
+                            body: '좌측내용'
+                        },
+                        {
+                            icon: '👥',
+                            title: '우측제목',
+                            body: '우측내용'
+                        }
+                    ],
+                    row2: {
+                        title: '내용/요약',
+                        body: '결론'
+                    }
+                });
+
+                // 10. 위쪽에 2칸, 아래에 2칸 (2+2)
+                addSlideWithTemplate('2+2', {
+                    row1: [
+                        {
+                            title: '좌상단 제목',
+                            body: '좌상단 내용'
+                        },
+                        {
+                            title: '우상단 제목',
+                            body: '우상단 내용'
+                        }
+                    ],
+                    row2: [
+                        {
+                            title: '좌하단 제목',
+                            body: '좌하단 내용'
+                        },
+                        {
+                            title: '우하단 제목',
+                            body: '우하단 내용'
+                        }
+                    ],
+                });
+
+
+                // 11. 위쪽에 2칸, 아래에 3칸 (2+3)
+                addSlideWithTemplate('2+3', {
+                    row1: [
+                        {
+                            title: '좌상단 제목',
+                            body: '좌상단 내용'
+                        },
+                        {
+                            title: '우상단 제목',
+                            body: '우상단 내용'
+                        }
+                    ],
+                    row2: [
+                        {
+                            title: '좌하단 제목',
+                            body: '좌하단 내용'
+                        },
+                        {
+                            title: '중하단 제목',
+                            body: '중하단 내용'
+                        },
+                        {
+                            title: '우하단 제목',
+                            body: '우하단 내용'
+                        }
+                    ],
+                });
+
+                // 12. 위쪽에 2칸, 아래에 4칸 (2+4)
+                addSlideWithTemplate('2+4', {
+                    row1: [
+                        {
+                            title: '좌상단 제목',
+                            body: '좌상단 내용'
+                        },
+                        {
+                            title: '우상단 제목',
+                            body: '우상단 내용'
+                        }
+                    ],
+                    row2: [
+                        {
+                            title: '좌좌하단 제목',
+                            body: '좌좌하단 내용'
+                        },
+                        {
+                            title: '좌하단 제목',
+                            body: '좌하단 내용'
+                        },
+                        {
+                            title: '우하단 제목',
+                            body: '우하단 내용'
+                        },
+                        {
+                            title: '우우하단 제목',
+                            body: '우우하단 내용'
+                        }
+                    ],
+                });
+
+                // 13. 위쪽에 3칸, 아래에 1줄 (3+1)
+                addSlideWithTemplate('3+1', {
+                    row1: [
+                        {
+                            title: '좌상단 제목',
+                            body: '좌상단 내용'
+                        },
+                        {
+                            title: '중상단 제목',
+                            body: '중상단 내용'
+                        },
+                        {
+                            title: '우상단 제목',
+                            body: '우상단 내용'
+                        }
+                    ],
+                    row2: {
+                            title: '결론',
+                            body: '요약'
+                        }
+                });
+
+                // 14. 위쪽에 3칸, 아래에 2칸 (3+2)
+                addSlideWithTemplate('3+2', {
+                    row1: [
+                        {
+                            title: '좌상단 제목',
+                            body: '좌상단 내용'
+                        },
+                        {
+                            title: '중상단 제목',
+                            body: '중상단 내용'
+                        },
+                        {
+                            title: '우상단 제목',
+                            body: '우상단 내용'
+                        }
+                    ],
+                    row2: [
+                        {
+                            title: '좌하단 제목',
+                            body: '좌하단 내용'
+                        },
+                        {
+                            title: '우하단 제목',
+                            body: '우하단 내용'
+                        }
+                    ]
+                });
+
+                // 15. 위쪽에 3칸, 아래에 3칸 (3+3)
+                addSlideWithTemplate('3+3', {
+                    row1: [
+                        {
+                            title: '좌상단 제목',
+                            body: '좌상단 내용'
+                        },
+                        {
+                            title: '중상단 제목',
+                            body: '중상단 내용'
+                        },
+                        {
+                            title: '우상단 제목',
+                            body: '우상단 내용'
+                        }
+                    ],
+                    row2: [
+                        {
+                            title: '좌하단 제목',
+                            body: '좌하단 내용'
+                        },
+                        {
+                            title: '중하단 제목',
+                            body: '중하단 내용'
+                        },
+                        {
+                            title: '우하단 제목',
+                            body: '우하단 내용'
+                        }
+                    ]
+                });
+
+                // 16. 위쪽에 3칸, 아래에 4칸 (3+4)
+                addSlideWithTemplate('3+4', {
+                    row1: [
+                        {
+                            title: '좌상단 제목',
+                            body: '좌상단 내용'
+                        },
+                        {
+                            title: '중상단 제목',
+                            body: '중상단 내용'
+                        },
+                        {
+                            title: '우상단 제목',
+                            body: '우상단 내용'
+                        }
+                    ],
+                    row2: [
+                        {
+                            title: '좌좌하단 제목',
+                            body: '좌좌하단 내용'
+                        },
+                        {
+                            title: '좌하단 제목',
+                            body: '좌하단 내용'
+                        },
+                        {
+                            title: '우하단 제목',
+                            body: '우하단 내용'
+                        },
+                        {
+                            title: '우우하단 제목',
+                            body: '우우하단 내용'
+                        }
+                    ]
+                });
+
+                // 17. 위쪽에 4칸, 아래에 1줄 (4+1)
+                addSlideWithTemplate('4+1', {
+                    row1: [
+                        {
+                            title: '좌좌상단 제목',
+                            body: '좌좌상단 내용'
+                        },
+                        {
+                            title: '좌상단 제목',
+                            body: '좌상단 내용'
+                        },
+                        {
+                            title: '우상단 제목',
+                            body: '우상단 내용'
+                        },
+                        {
+                            title: '우우상단 제목',
+                            body: '우우상단 내용'
+                        }
+                    ],
+                    row2: {
+                            title: '결론',
+                            body: '요약'
+                        }
+                });
+
+                // 18. 위쪽에 4칸, 아래에 2칸 (4+2)
+                addSlideWithTemplate('4+2', {
+                    row1: [
+                        {
+                            title: '좌좌상단 제목',
+                            body: '좌좌상단 내용'
+                        },
+                        {
+                            title: '좌상단 제목',
+                            body: '좌상단 내용'
+                        },
+                        {
+                            title: '우상단 제목',
+                            body: '우상단 내용'
+                        },
+                        {
+                            title: '우우상단 제목',
+                            body: '우우상단 내용'
+                        }
+                    ],
+                    row2: [
+                        {
+                            title: '좌하단 제목',
+                            body: '좌하단 내용'
+                        },
+                        {
+                            title: '우하단 제목',
+                            body: '우하단 내용'
+                        }
+                    ]
+                });
+
+                // 19. 위쪽에 4칸, 아래에 3칸 (4+3)
+                addSlideWithTemplate('4+3', {
+                    row1: [
+                        {
+                            title: '좌좌상단 제목',
+                            body: '좌좌상단 내용'
+                        },
+                        {
+                            title: '좌상단 제목',
+                            body: '좌상단 내용'
+                        },
+                        {
+                            title: '우상단 제목',
+                            body: '우상단 내용'
+                        },
+                        {
+                            title: '우우상단 제목',
+                            body: '우우상단 내용'
+                        }
+                    ],
+                    row2: [
+                        {
+                            title: '좌하단 제목',
+                            body: '좌하단 내용'
+                        },
+                        {
+                            title: '중하단 제목',
+                            body: '중하단 내용'
+                        },
+                        {
+                            title: '우하단 제목',
+                            body: '우하단 내용'
+                        }
+                    ]
+                });
+
+                // 20. 위쪽에 4칸, 아래에 4칸 (4+4)
+                addSlideWithTemplate('4+4', {
+                    row1: [
+                        {
+                            title: '좌좌상단 제목',
+                            body: '좌좌상단 내용'
+                        },
+                        {
+                            title: '좌상단 제목',
+                            body: '좌상단 내용'
+                        },
+                        {
+                            title: '우상단 제목',
+                            body: '우상단 내용'
+                        },
+                        {
+                            title: '우우상단 제목',
+                            body: '우우상단 내용'
+                        }
+                    ],
+                    row2: [
+                        {
+                            title: '좌좌하단 제목',
+                            body: '좌좌하단 내용'
+                        },
+                        {
+                            title: '좌하단 제목',
+                            body: '좌하단 내용'
+                        },
+                        {
+                            title: '우하단 제목',
+                            body: '우하단 내용'
+                        },
+                        {
+                            title: '우우하단 제목',
+                            body: '우우하단 내용'
+                        }
+                    ]
+                });
+
+    // … 필요한 만큼 추가 …
+
+    // 초기화
+    initializeSlides();
+  });
+
+  </script>
+</body>
+</html>
