@@ -582,7 +582,7 @@ p, .body-1 {
 .layout-3-1 .row-2 .full-width-content,
 .layout-4-1 .row-2 .full-width-content {
     background: var(--bg-white);
-    border-top: 2px solid var(--accent-color);
+    border-top: 0px solid var(--accent-color);
 }
 
 /* 특수 스타일 */
